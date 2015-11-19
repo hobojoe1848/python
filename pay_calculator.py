@@ -13,10 +13,10 @@ else:
 
     while True:
       try:
-        normaltime = int(raw_input('Please enter normal hourly rate: '))
+        normaltime = int(input('Please enter normal hourly rate: '))
         break
       except ValueError:
-        print "Not a number, please try again"
+        print("Not a number, please try again")
 
     normaltime = float(normaltime)                      #Convert user input to float
     
