@@ -1,5 +1,11 @@
-import os.path
-if os.path.isfile("userattributes.txt") == True:        #Check to see userattributes file exists
+import os
+import sys
+
+refresh = False
+if len(sys.argv) > 1: 
+  refresh = True # if called with cli arg (any string) do the questioning again
+
+if os.path.isfile("userattributes.txt") and not refresh:        #Check to see userattributes file exists (== True not needed) - if refresh go to else
     print("Welcome Back!")                              #If it exists, print Welcome Back Message        
 else:
     configfile = open("userattributes.txt", "a")        #If userattributes doesn't exist, create new userattributes file
