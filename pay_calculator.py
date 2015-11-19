@@ -8,10 +8,15 @@ if len(sys.argv) > 1:
 if os.path.isfile("userattributes.txt") and not refresh:        #Check to see userattributes file exists (== True not needed) - if refresh go to else
     print("Welcome Back!")                              #If it exists, print Welcome Back Message        
 else:
+    # new file or refresh
     configfile = open("userattributes.txt", "w")        #If userattributes doesn't exist, create new userattributes file
-    print('Please enter normal hourly rate: ')
 
-    normaltime = input()                                #Allow user to enter in base normal pay rate
+    while True:
+      try:
+        normaltime = int(raw_input('Please enter normal hourly rate: '))
+        break
+      except ValueError:
+        print "Not a number, please try again"
 
     normaltime = float(normaltime)                      #Convert user input to float
     
