@@ -16,7 +16,7 @@ else:
     print("Time and Half Rate: " + str(timeandhalf))
     print("Double Time Rate: " + str(doubletime))
 
-    configfile.write(normaltime + "\n");
+    configfile.write(str(normaltime) + "\n");
     configfile.write(str(timeandhalf) + "\n");
     configfile.write(str(doubletime) + "\n");
     
