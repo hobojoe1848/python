@@ -1,6 +1,96 @@
 import os
 import sys
 
+#Define Initial Global Variables#
+
+total_OT = 0
+
+#Let's define the functions that will be used by the main menu.
+
+
+def TimeandHalfEntry():
+  print('\n')
+ 
+  while True:
+    try:
+      timeandhalfhours = float(input('How many hours of time and a half did you work?: '))
+      break
+    except ValueError:
+      print('Invalid entry. Please enter a number. \n')
+
+  totaltimeandhalf = round((timeandhalfhours * timeandhalfrate), 2)
+
+  print(str(totaltimeandhalf) + '\n')
+
+  global total_OT
+  total_OT = round((total_OT + totaltimeandhalf), 2)
+
+###########################
+
+
+def DoubleTimeEntry():
+
+  print('\n')
+ 
+  while True:
+    try:
+      double_time_hours = float(input('How many hours of double time did you work?: '))
+      break
+    except ValueError:
+      print('Invalid entry. Please enter a number. \n')
+
+  totaldoubletime = round((double_time_hours * doubletimerate), 2)
+
+  print(str(totaldoubletime) + '\n')
+
+  global total_OT
+  total_OT = round((total_OT + totaldoubletime), 2)
+
+
+#########################
+
+
+def DoubleTimeandHalfEntry():
+
+  print('\n')
+ 
+  while True:
+    try:
+      double_time_and_half_hours = float(input('How many hours of double time and a half did you work?: '))
+      break
+    except ValueError:
+      print('Invalid entry. Please enter a number. \n')
+
+  total_double_time_and_half = round((double_time_and_half_hours * doubletimeandhalfrate), 2)
+
+  print(str(total_double_time_and_half) + '\n')
+
+  global total_OT
+  total_OT = round((total_OT + total_double_time_and_half), 2)
+
+
+#########################
+
+
+def PrintTotal():
+
+  global total_OT
+  
+  print('\n')
+  
+  print('Current Total Overtime Earned = $' + str(total_OT) + '. \n')
+
+
+###########################
+
+
+
+
+
+
+##Start the User Attributes Collection##
+
+
 refresh = False
 if len(sys.argv) > 1: 
   refresh = True                      # if script is run with cli argument (any string) do the questioning again
@@ -22,17 +112,13 @@ else:
         print('Not a number, please try again')         #if anything other than an int is entered, error out.
 
         
-    timeandhalfrate = normaltimerate * 1.5                      #Calculate time and a half and double time rates based on normal pay rate
-    doubletimerate = normaltimerate * 2
-    doubletimeandhalfrate = normaltimerate * 2.5
-
-    timeandhalfrate = round(timeandhalfrate, 4)                 #Round rates to 4 decimal places
-    doubletimerate = round(doubletimerate, 4)
-    doubletimeandhalfrate = round(doubletimeandhalfrate, 4)
+    timeandhalfrate = round((normaltimerate * 1.5), 4)                      #Calculate time and a half and double time rates based on normal pay rate and rounds to 4 decimal places
+    doubletimerate = round((normaltimerate * 2), 4)
+    doubletimeandhalfrate = round((normaltimerate * 2.5), 4)
     
     print('Time and Half Rate: ' + str(timeandhalfrate))    #Display over time rates
     print('Double Time Rate: ' + str(doubletimerate))
-    print('Double Time and Half Rate: ' + str(doubletimeandhalfrate))
+    print('Double Time and Half Rate: ' + str(doubletimeandhalfrate) + '\n')
 
     configfile.write(str(normaltimerate) + '\n');           #Write normal, time and half and double time amounts to userattributes file
     configfile.write(str(timeandhalfrate) + '\n');
@@ -42,39 +128,12 @@ else:
     configfile.close()                                  #close off the userattributes file (configfile variable).
 
 
-#Let's define the functions that will be used by the main menu.
 
-
-def TimeandHalfEntry():
-  print('\n')
- 
-  while True:
-    try:
-      timeandhalfhours = float(input('How many hours of time and a half did you work? '))
-      break
-    except ValueError:
-      print('Invalid entry. Please enter a number. \n')
-
-  totaltimeandhalf = timeandhalfhours * timeandhalfrate
-
-  print(str(totaltimeandhalf) + '\n')
-  
-
-
-###########################
-
-
-
-def PrintTotal():
-  print('\n')
-  
-  print(str(total) + '\n')
-
-  input('Press any key to return to main menu...')
   
 
 
 #Now that the userattributes have been collected and stored, let's start the actual program
+
 
 configfile = open('userattributes.txt', 'r')            #open the userattributes file in variable "configfile".
 
@@ -89,7 +148,9 @@ while True:
   print('(1) Time and a Half (' + str(timeandhalfrate) + ').')
   print('(2) Double Time (' + str(doubletimerate) + ').')
   print('(3) Double Time and a Half (' + str(doubletimeandhalfrate) + ').')
-  print('(4) View Current Total Earned.')
+  print('(4) Quit')
+  print('\n')
+  print('**Current Total Overtime Earned = $' + str(total_OT) + '.**')
   print('\n')
 
   try:
@@ -101,13 +162,15 @@ while True:
   if OTchoice == 1:
     TimeandHalfEntry()
   elif OTchoice == 2:
-    print('Placeholder for 2')
+    DoubleTimeEntry()
   elif OTchoice == 3:
-    print('Placeholder for 3')
+    DoubleTimeandHalfEntry()
   elif OTchoice == 4:
-    PrintTotal()
+    break
   else:
     print('Invalid number. Please try again. \n')
+
+  input('Press Enter... \n')
   
     
       
